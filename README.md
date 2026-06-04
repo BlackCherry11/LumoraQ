@@ -77,20 +77,52 @@ A Convolutional Neural Network (CNN) was used:
 ## Current Status
 
 - Classical CNN baseline completed
-- Training pipeline implemented
-- Evaluation pipeline working
-- Preparing for hybrid quantum-classical experiments (PennyLane)
+- StrongCNN architecture implemented
+- Training and evaluation pipeline completed
+- Best accuracy achieved: 88.83%
+- Preparing for hybrid quantum-classical experiments using PennyLane
 
 ---
+
+## Training Results
+
+## StrongCNN Upgrade
+
+To improve performance, the original CNN was upgraded with:
+
+- Batch Normalization
+- Deeper convolutional architecture
+- Dropout regularization
+- Data augmentation
+
+Techniques used:
+
+- RandomHorizontalFlip
+- RandomRotation
+- ColorJitter
+
+### Best Result
+
+Accuracy: **88.83%**
+
+Improvement over original CNN:
+
+80.28% → 88.83%
+
+Improvement over initial baseline:
+
+67% → 88.83%
+
 
 ## Next Steps
 
-- Improve CNN with Batch Normalization
-- Add data augmentation
-- Experiment with deeper architectures (ResNet-style)
-- Implement Variational Quantum Classifier (VQC)
-- Compare classical vs quantum performance
+- Save and version trained model checkpoints
+- Generate training and accuracy visualizations
+- Experiment with ResNet-style architectures
+- Install PennyLane
+- Implement a Variational Quantum Classifier (VQC)
+- Compare hybrid quantum-classical models against the 88.83% StrongCNN benchmark
 
 ---
 
-## 📁 Project Structure
+## Project Structure
