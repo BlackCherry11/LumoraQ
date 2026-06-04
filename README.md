@@ -113,6 +113,39 @@ Improvement over initial baseline:
 
 67% → 88.83%
 
+## Latest Results
+
+StrongCNN Evaluation Results:
+
+| Metric | Value |
+|----------|----------|
+| Accuracy | 88.83% |
+| Precision (Weighted Avg) | 89% |
+| Recall (Weighted Avg) | 89% |
+| F1 Score (Weighted Avg) | 89% |
+
+Test Dataset Size: 5400 Images
+
+The model demonstrates strong performance across all ten EuroSAT land-cover classes and serves as the current classical benchmark for subsequent quantum experiments.
+
+## Key Findings
+
+- Deep CNN architectures significantly outperform shallow CNN baselines.
+- Architectural improvements contributed more to performance gains than increasing training epochs alone.
+- Batch Normalization improved convergence and training stability.
+- Data augmentation improved model generalization on unseen satellite imagery.
+- Certain land-cover classes such as SeaLake and Residential achieved near-perfect classification performance.
+- Visually similar vegetation classes remain the most challenging classification task.
+
+## Research Direction
+
+The next stage of the project investigates whether Quantum Machine Learning can provide advantages for Earth observation tasks.
+
+The primary research question is:
+
+Can hybrid quantum-classical machine learning models effectively analyze high-dimensional satellite imagery and provide competitive performance compared to modern deep learning approaches?
+
+Rather than assuming quantum superiority, the project aims to benchmark and evaluate the practical strengths and limitations of quantum machine learning in remote sensing applications.
 
 ## Next Steps
 
