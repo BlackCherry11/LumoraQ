@@ -94,6 +94,23 @@ Accuracy gain over initial baseline:
 - StrongCNN currently serves as the project's benchmark classical model.
 ---
 
+## Confusion Matrix Analysis
+
+Completed
+
+Observations:
+
+- Forest achieved perfect recall (1.00), indicating all forest images were successfully identified.
+- SeaLake demonstrated the strongest overall classification performance.
+- Residential and Industrial classes achieved high precision and recall.
+- Most classification errors occurred among vegetation-related classes:
+  - AnnualCrop
+  - HerbaceousVegetation
+  - PermanentCrop
+  - Pasture
+
+This suggests that spectrally similar land-cover categories remain challenging even for deep convolutional models.
+
 ## Next Steps
 
 - Save and version-control trained model checkpoints
@@ -102,3 +119,5 @@ Accuracy gain over initial baseline:
 - Implement a hybrid quantum-classical neural network
 - Build a Variational Quantum Classifier (VQC)
 - Compare quantum models against the 88.83% StrongCNN benchmark
+
+
