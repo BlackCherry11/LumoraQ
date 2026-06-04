@@ -76,7 +76,7 @@ Accuracy gain over previous model:
 Accuracy gain over initial baseline:
 - +21.22 percentage points
 
-#### Observations
+#### Results
 
 - Batch Normalization improved training stability.
 - Additional convolution layers improved feature extraction.
