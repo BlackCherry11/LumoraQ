@@ -48,7 +48,7 @@
 
 ---
 
-## 🚀 Next Steps
+## Next Steps
 
 - Improve model architecture (BatchNorm, deeper CNN)
 - Add data augmentation
