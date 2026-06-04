@@ -4,7 +4,7 @@ Quantum Machine Learning for Satellite Image Analysis
 
 ---
 
-## 🎯 Goal
+## Goal
 
 This project investigates hybrid quantum-classical machine learning methods for Earth observation data using the EuroSAT dataset.
 
@@ -12,7 +12,7 @@ The current stage focuses on building a strong classical baseline before introdu
 
 ---
 
-#Dataset
+## Dataset
 
 - EuroSAT dataset
 - 27,000 satellite images
@@ -32,7 +32,7 @@ Images are resized to 64×64 and normalized before training.
 
 ---
 
-#Model Architecture
+## Model Architecture
 
 A Convolutional Neural Network (CNN) was used:
 
