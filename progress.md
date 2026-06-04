@@ -4,7 +4,7 @@
 
 ---
 
-## 📊 Dataset
+## Dataset
 - EuroSAT dataset loaded
 - 27,000 satellite images
 - 10 classes
