@@ -1,128 +1,126 @@
-# LumoraQ
-
-Quantum Machine Learning for Satellite Image Analysis
+# Progress Log - LumoraQ
 
 ---
 
-## Goal
-
-This project investigates hybrid quantum-classical machine learning methods for Earth observation using the EuroSAT dataset.
-
-The current stage focuses on building a strong classical baseline before introducing quantum models.
-
-Rather than assuming quantum advantage, the project benchmarks classical deep learning against hybrid quantum approaches.
+## June 2026
 
 ---
 
 ## Dataset
 
-- EuroSAT dataset
-- 27,000 satellite images
-- 10 land-use classes:
-  - AnnualCrop
-  - Forest
-  - HerbaceousVegetation
-  - Highway
-  - Industrial
-  - Pasture
-  - PermanentCrop
-  - Residential
-  - River
-  - SeaLake
-
-Images are resized to 64×64 and normalized before training.
+- EuroSAT dataset loaded
+- 27,000 images
+- 10 land-use classes
+- Images resized to 64×64
 
 ---
 
-## Model Architecture
+## Model Development
 
-A Convolutional Neural Network (CNN) was implemented as the classical baseline:
+### CNN Baseline
 
-- Conv2D (3 → 32 filters)
-- Batch Normalization
-- ReLU
-- Conv2D (32 → 32 filters)
-- Batch Normalization
-- ReLU
-- MaxPooling
-- Conv2D (32 → 64 filters)
-- Batch Normalization
-- ReLU
-- Conv2D (64 → 64 filters)
-- Batch Normalization
-- ReLU
-- MaxPooling
-- Fully Connected (16384 → 256)
-- Dropout (0.4)
-- Fully Connected (256 → 10)
-- CrossEntropy Loss
-- Adam Optimizer
+- 2 convolution layers
+- MaxPooling layers
+- Fully connected classifier
+- CrossEntropy loss
+- Adam optimizer
 
 ---
 
-## Training Results
+## Experiments
 
-### Baseline CNN
+### Experiment 1 - Initial Training
 - Epochs: 1
 - Accuracy: 67%
 - Loss: 1.2602
 
-### Extended Training
+---
+
+### Experiment 2 - Extended Training
 - Epochs: 15
 - Accuracy: 80.28%
 - Loss: 0.0791
 
-### StrongCNN (Final Model)
+---
+
+### Experiment 3 - StrongCNN Upgrade
+
+Architecture Improvements:
+- Batch Normalization added
+- Depth increased (2 → 4 conv layers)
+- Channels increased (16/32 → 32/64)
+- Dropout (0.4)
+- Data augmentation:
+  - RandomHorizontalFlip
+  - RandomRotation
+  - ColorJitter
+
+Training Setup:
+- Epochs: 15
+- Optimizer: Adam
+- Learning rate: 0.0005
+
+---
+
+## Final Results
+
 - Accuracy: 88.83%
-- Precision (Weighted): 89%
-- Recall (Weighted): 89%
-- F1 Score (Weighted): 89%
+- Precision (weighted): 89%
+- Recall (weighted): 89%
+- F1 Score (weighted): 89%
 
-Test set size: 5,400 images
+Improvement:
+- 67% → 80.28% → 88.83%
 
 ---
 
-## Key Improvements
+## Observations
 
-- 80.28% → 88.83% after architecture upgrade
-- 67% → 88.83% overall improvement
-
-Key factors:
-- Batch Normalization improved stability
-- Deeper CNN improved feature extraction
+- Batch Normalization improved convergence stability
+- Deeper networks improved feature extraction
 - Data augmentation improved generalization
-- Dropout reduced overfitting
+- Vegetation-related classes remain the hardest to classify
+- StrongCNN is the current benchmark model
 
 ---
 
-## Insights
+## Confusion Matrix Insights
 
-- CNNs effectively learn spatial patterns in satellite imagery
-- Architectural improvements outperform simple epoch scaling
-- Vegetation-related classes remain the most difficult to separate
-- Visually similar land-cover classes lead to classification overlap
+- Forest achieved perfect recall (1.00)
+- SeaLake performed best overall
+- Residential and Industrial classes performed strongly
+- Confusions mostly occur among vegetation classes:
+  - AnnualCrop
+  - HerbaceousVegetation
+  - PermanentCrop
+  - Pasture
+
+These classes remain spectrally similar and difficult to separate.
 
 ---
 
 ## Research Direction
 
-The next phase explores whether Quantum Machine Learning can enhance performance on remote sensing tasks.
+The project now transitions toward quantum machine learning.
 
-Core research question:
+Goal:
 
-Can hybrid quantum-classical models compete with or improve upon modern deep learning methods for satellite image classification?
+Evaluate whether hybrid quantum-classical models can compete with deep CNNs in satellite image classification.
 
-This project aims to evaluate quantum ML pragmatically, focusing on empirical comparison rather than assumed advantage.
+Focus is on:
+- empirical evaluation
+- benchmarking
+- hybrid architecture exploration
 
 ---
 
 ## Next Steps
 
-- Save and version trained models
-- Generate training and accuracy plots
-- Experiment with ResNet-based architectures
+- Save model checkpoints (.pth versioning)
+- Create training curves and visualizations
+- Compare CNN architectures (ResNet, etc.)
 - Implement Variational Quantum Classifier (VQC)
-- Build hybrid CNN + quantum pipeline
-- Benchmark quantum models against StrongCNN (88.83%)
+- Build CNN → Quantum hybrid pipeline
+- Benchmark against StrongCNN (88.83%)
 
 ---
