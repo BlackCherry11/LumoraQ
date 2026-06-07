@@ -2,37 +2,49 @@
 
 ---
 
-## June 2026
-
----
-
-## Dataset
+## 1. Dataset
 
 - EuroSAT dataset loaded
 - 27,000 images
-- 10 land-use classes
-- Images resized to 64×64
+- 10 classes
+- Image size: 64×64
+- Normalization applied
 
 ---
 
-## Classical Model Development
+## 2. Classical Model Development
 
-### CNN Baseline
+### 2.1 Initial CNN
 
 - 2 convolution layers
-- MaxPooling layers
+- MaxPooling
 - Fully connected classifier
-- CrossEntropy loss
+- CrossEntropyLoss
 - Adam optimizer
+
+Accuracy:
+- 67%
 
 ---
 
-### StrongCNN Upgrade
+### 2.2 Extended Training
 
-Architecture improvements:
-- Batch Normalization added
-- Depth increased (2 → 4 conv layers)
-- Channels increased (16/32 → 32/64)
+- Same model trained longer
+
+Accuracy:
+- 80.28%
+
+Loss:
+- 0.0791
+
+---
+
+### 2.3 StrongCNN
+
+Architecture upgrades:
+- Batch Normalization
+- Increased depth (2 → 4 conv layers)
+- Increased channels (16/32 → 32/64)
 - Dropout (0.4)
 - Data augmentation:
   - RandomHorizontalFlip
@@ -45,72 +57,122 @@ Training:
 
 ---
 
-## Classical Results
+## 3. Final Classical Results
 
-- Initial CNN: 67%
-- Extended CNN: 80.28%
-- StrongCNN: 88.83%
+- Accuracy: 88.83%
+- Precision: 89%
+- Recall: 89%
+- F1 Score: 89%
 
-Final metrics:
-- Precision (weighted): 89%
-- Recall (weighted): 89%
-- F1 Score (weighted): 89%
-
----
-
-## Observations (Classical)
-
-- Batch Normalization improved stability
-- Deeper networks improved feature extraction
-- Data augmentation improved generalization
-- StrongCNN is current benchmark model
+Loss:
+- 0.0791
 
 ---
 
-## Quantum Machine Learning (VQC Experiment)
+## 4. Training Graphs
 
-### Quantum Circuit
+Generated:
+- Accuracy vs Epoch
+- Loss vs Epoch
 
-- 2-qubit Variational Quantum Circuit
-- RX and RY encoding for inputs
-- Pauli-Z expectation measurements
-- Trainable parameters optimized via gradient descent
-
----
-
-### Training Behavior
-
-Initial tests confirmed successful learning:
-
-- Initial loss: ~1.63
-- Step 20: 0.0303
-- Step 40: 0.0185
-- Step 60: 0.0160
-- Step 80: 0.0153
-- Step 100: 0.0150
+Observations:
+- Stable convergence
+- No overfitting due to augmentation + dropout
+- Validation closely follows training curve
 
 ---
 
-### Observations (Quantum)
+## 5. Confusion Matrix
 
-- Circuit is fully differentiable
-- Gradient descent optimization works correctly
-- Parameters converge to stable minimum
-- Model is functional as a basic VQC
-- Currently operates on synthetic inputs, not satellite images
+### 5.1 Diagonal Dominance
+
+Strong diagonal entries indicate correct predictions across most classes.
 
 ---
 
-## Key Insight
+### 5.2 Best Performing Classes
 
-Quantum model is valid but not yet integrated with real dataset.
+- Forest
+- SeaLake
+- Residential
+- Industrial
 
 ---
 
-## Next Steps
+### 5.3 Weak Classes
 
-- Extract CNN feature vectors from StrongCNN
-- Apply dimensionality reduction (PCA)
-- Feed features into quantum circuit
-- Build hybrid CNN + VQC architecture
-- Benchmark against 88.83% classical model
+- AnnualCrop
+- HerbaceousVegetation
+- PermanentCrop
+- Pasture
+
+---
+
+### 5.4 Insight
+
+- Errors are structured, not random
+- Vegetation classes overlap in feature space
+- Model generalizes well for distinct land types
+
+---
+
+## 6. Quantum Machine Learning (VQC)
+
+### 6.1 Circuit
+
+- 2-qubit variational quantum circuit
+- RX and RY encoding
+- Pauli-Z measurement
+- Trainable parameters
+
+---
+
+### 6.2 Training
+
+Optimizer:
+- Gradient Descent (PennyLane)
+
+Steps:
+- 100 iterations
+
+---
+
+### 6.3 Loss Progression
+
+- Initial: ~1.6395
+- Step 20: 0.030337
+- Step 40: 0.018537
+- Step 60: 0.016034
+- Step 80: 0.015287
+- Step 100: 0.015035
+
+---
+
+### 6.4 Observations
+
+- Smooth convergence
+- Stable optimization
+- Valid quantum gradient computation
+- Toy model successfully learned
+- Not yet integrated with real dataset
+
+---
+
+## 7. Current Status
+
+Classical:
+- StrongCNN complete (88.83%)
+
+Quantum:
+- VQC implemented and trained
+- Convergence verified
+
+---
+
+## 8. Next Steps
+
+- Extract CNN features
+- Apply PCA
+- Feed into quantum circuit
+- Build hybrid CNN + VQC model
+- Benchmark against classical model
