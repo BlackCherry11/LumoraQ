@@ -1,123 +1,128 @@
-# Progress Log - LumoraQ
+# LumoraQ
 
-## June 4
+Quantum Machine Learning for Satellite Image Analysis
+
+---
+
+## Goal
+
+This project investigates hybrid quantum-classical machine learning methods for Earth observation using the EuroSAT dataset.
+
+The current stage focuses on building a strong classical baseline before introducing quantum models.
+
+Rather than assuming quantum advantage, the project benchmarks classical deep learning against hybrid quantum approaches.
 
 ---
 
 ## Dataset
-- EuroSAT dataset loaded
+
+- EuroSAT dataset
 - 27,000 satellite images
-- 10 classes
-- Images resized to 64×64
+- 10 land-use classes:
+  - AnnualCrop
+  - Forest
+  - HerbaceousVegetation
+  - Highway
+  - Industrial
+  - Pasture
+  - PermanentCrop
+  - Residential
+  - River
+  - SeaLake
+
+Images are resized to 64×64 and normalized before training.
 
 ---
 
-## Model Development
+## Model Architecture
 
-### CNN Baseline Built
-- 2 convolution layers
-- MaxPooling layers
-- Fully connected classifier
-- CrossEntropy loss
-- Adam optimizer
+A Convolutional Neural Network (CNN) was implemented as the classical baseline:
+
+- Conv2D (3 → 32 filters)
+- Batch Normalization
+- ReLU
+- Conv2D (32 → 32 filters)
+- Batch Normalization
+- ReLU
+- MaxPooling
+- Conv2D (32 → 64 filters)
+- Batch Normalization
+- ReLU
+- Conv2D (64 → 64 filters)
+- Batch Normalization
+- ReLU
+- MaxPooling
+- Fully Connected (16384 → 256)
+- Dropout (0.4)
+- Fully Connected (256 → 10)
+- CrossEntropy Loss
+- Adam Optimizer
 
 ---
 
-## Experiments
+## Training Results
 
-### Experiment 1 - Initial Training
+### Baseline CNN
 - Epochs: 1
 - Accuracy: 67%
 - Loss: 1.2602
 
----
-
-### Experiment 2 - Extended Training
+### Extended Training
 - Epochs: 15
-- Final Accuracy: 80.28%
-- Final Loss: 0.0791
+- Accuracy: 80.28%
+- Loss: 0.0791
+
+### StrongCNN (Final Model)
+- Accuracy: 88.83%
+- Precision (Weighted): 89%
+- Recall (Weighted): 89%
+- F1 Score (Weighted): 89%
+
+Test set size: 5,400 images
 
 ---
 
-### Experiment 3 - StrongCNN Upgrade
+## Key Improvements
 
-#### Architecture Improvements
+- 80.28% → 88.83% after architecture upgrade
+- 67% → 88.83% overall improvement
 
-To improve classification performance, the original CNN architecture was upgraded with several modern deep learning techniques:
+Key factors:
+- Batch Normalization improved stability
+- Deeper CNN improved feature extraction
+- Data augmentation improved generalization
+- Dropout reduced overfitting
 
-- Added Batch Normalization layers after convolution layers
-- Increased network depth from 2 convolution layers to 4 convolution layers
-- Increased feature channels from 16/32 to 32/64
-- Added Dropout (0.4) before the classifier
-- Added data augmentation:
-  - RandomHorizontalFlip
-  - RandomRotation (20°)
-  - ColorJitter
-
-#### Training
-
-- Epochs: 15
-- Optimizer: Adam
-- Learning Rate: 0.0005
-
-#### Results
-
-- Final Accuracy: 88.83%
-
-#### Improvement
-
-- Initial CNN (1 Epoch): 67.61%
-- Original CNN (15 Epochs): 80.28%
-- StrongCNN (15 Epochs): 88.83%
-
-Accuracy gain over previous model:
-- +8.55 percentage points
-
-Accuracy gain over initial baseline:
-- +21.22 percentage points
-
-#### Results
-
-- Batch Normalization improved training stability.
-- Additional convolution layers improved feature extraction.
-- Data augmentation improved generalization performance.
-- StrongCNN is currently the best-performing model in the project.
-- The model demonstrates that architectural improvements have a larger impact than simply increasing training epochs.
-
-## Observations
-
-- Increasing training epochs improved performance from 67.61% to 80.28%.
-- Architectural improvements increased performance further to 88.83%.
-- Batch Normalization stabilized training and improved convergence.
-- Data augmentation improved model generalization.
-- Deeper convolution layers extracted richer spatial features from satellite imagery.
-- StrongCNN currently serves as the project's benchmark classical model.
 ---
 
-## Confusion Matrix Analysis
+## Insights
 
-Completed
+- CNNs effectively learn spatial patterns in satellite imagery
+- Architectural improvements outperform simple epoch scaling
+- Vegetation-related classes remain the most difficult to separate
+- Visually similar land-cover classes lead to classification overlap
 
-Observations:
+---
 
-- Forest achieved perfect recall (1.00), indicating all forest images were successfully identified.
-- SeaLake demonstrated the strongest overall classification performance.
-- Residential and Industrial classes achieved high precision and recall.
-- Most classification errors occurred among vegetation-related classes:
-  - AnnualCrop
-  - HerbaceousVegetation
-  - PermanentCrop
-  - Pasture
+## Research Direction
 
-This suggests that spectrally similar land-cover categories remain challenging even for deep convolutional models.
+The next phase explores whether Quantum Machine Learning can enhance performance on remote sensing tasks.
+
+Core research question:
+
+Can hybrid quantum-classical models compete with or improve upon modern deep learning methods for satellite image classification?
+
+This project aims to evaluate quantum ML pragmatically, focusing on empirical comparison rather than assumed advantage.
+
+---
 
 ## Next Steps
 
-- Save and version-control trained model checkpoints
-- Generate training and accuracy visualizations
-- Compare multiple CNN architectures
-- Implement a hybrid quantum-classical neural network
-- Build a Variational Quantum Classifier (VQC)
-- Compare quantum models against the 88.83% StrongCNN benchmark
+- Save and version trained models
+- Generate training and accuracy plots
+- Experiment with ResNet-based architectures
+- Implement Variational Quantum Classifier (VQC)
+- Build hybrid CNN + quantum pipeline
+- Benchmark quantum models against StrongCNN (88.83%)
 
-
+---
