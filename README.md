@@ -4,17 +4,23 @@ Quantum Machine Learning for Satellite Image Analysis
 
 ---
 
-## Goal
+## 1. Project Overview
 
-This project investigates hybrid quantum-classical machine learning methods for Earth observation using the EuroSAT dataset.
+LumoraQ investigates hybrid quantum-classical machine learning methods for satellite image classification using the EuroSAT dataset.
 
-The current stage focuses on building a strong classical baseline and validating a working Variational Quantum Classifier (VQC) before integrating both into a hybrid pipeline.
+The project follows a structured progression:
 
-Rather than assuming quantum advantage, the project benchmarks classical deep learning against quantum and hybrid approaches.
+1. Build a classical CNN baseline
+2. Improve performance using architectural upgrades (StrongCNN)
+3. Analyze results using metrics, graphs, and confusion matrix
+4. Implement a Variational Quantum Classifier (VQC)
+5. Develop a hybrid CNN + quantum pipeline
+
+The goal is to evaluate quantum machine learning realistically against strong classical baselines.
 
 ---
 
-## Dataset
+## 2. Dataset
 
 - EuroSAT dataset
 - 27,000 satellite images
@@ -30,118 +36,199 @@ Rather than assuming quantum advantage, the project benchmarks classical deep le
   - River
   - SeaLake
 
-Images are resized to 64×64 and normalized before training.
+Preprocessing:
+- Image size: 64×64
+- Normalization applied
+- Data augmentation used during training
 
 ---
 
-## Classical Model (StrongCNN)
+## 3. Classical Model Development
 
-A Convolutional Neural Network was used as the classical benchmark:
+### 3.1 Initial CNN
 
+- 2 convolution layers
+- MaxPooling layers
+- Fully connected classifier
+- CrossEntropyLoss
+- Adam optimizer
+
+Performance:
+- Accuracy: 67%
+
+---
+
+### 3.2 Extended CNN Training
+
+- Same architecture trained longer
+
+Performance:
+- Accuracy: 80.28%
+- Loss: 0.0791
+
+---
+
+### 3.3 StrongCNN (Final Classical Model)
+
+Architecture:
 - Conv2D (3 → 32)
-- Batch Normalization
-- ReLU
+- BatchNorm + ReLU
 - Conv2D (32 → 32)
-- Batch Normalization
-- ReLU
+- BatchNorm + ReLU
 - MaxPooling
 - Conv2D (32 → 64)
-- Batch Normalization
-- ReLU
+- BatchNorm + ReLU
 - Conv2D (64 → 64)
-- Batch Normalization
-- ReLU
+- BatchNorm + ReLU
 - MaxPooling
-- Fully Connected (16384 → 256)
+- Linear (16384 → 256)
 - Dropout (0.4)
-- Fully Connected (256 → 10)
-- CrossEntropy Loss
-- Adam Optimizer
+- Linear (256 → 10)
 
----
-
-## Classical Results
-
+Performance:
 - Accuracy: 88.83%
-- Precision (weighted): 89%
-- Recall (weighted): 89%
-- F1 Score (weighted): 89%
+- Precision: 89%
+- Recall: 89%
+- F1 Score: 89%
 
-Test set size: 5,400 images
-
----
-
-## Quantum Machine Learning (VQC Experiment)
-
-A Variational Quantum Circuit was implemented using PennyLane.
+Test set size: 5400 images
 
 ---
 
-### Quantum Circuit Design
+## 4. Training Graphs
 
-- 2-qubit quantum system
-- Input encoded using RX and RY rotation gates
-- Measurements using Pauli-Z expectation values
-- Trainable parameters optimized via gradient descent
+Generated plots:
+- Training vs Validation Accuracy
+- Training vs Validation Loss
+
+Key observations:
+- Smooth convergence across epochs
+- No major overfitting due to dropout and augmentation
+- Validation closely tracks training performance
+- Stable learning behavior after StrongCNN upgrade
+
+---
+
+## 5. Confusion Matrix Analysis
+
+The confusion matrix shows strong diagonal dominance, meaning most predictions lie on the correct class axis.
+
+### 5.1 Strong Diagonal Classes
+
+High-performing classes:
+- Forest (near-perfect classification)
+- SeaLake (best overall performance)
+- Residential
+- Industrial
+
+These classes show strong feature separability.
+
+---
+
+### 5.2 Misclassification Patterns
+
+Most errors occur between vegetation-related classes:
+
+- AnnualCrop
+- HerbaceousVegetation
+- PermanentCrop
+- Pasture
+
+---
+
+### 5.3 Key Insight
+
+- Strong diagonal dominance indicates strong classification performance
+- Errors are structured, not random
+- Model performs best on visually distinct land types
+- Struggles with spectrally similar vegetation classes
+
+---
+
+## 6. Quantum Machine Learning (VQC)
+
+A Variational Quantum Classifier was implemented using PennyLane.
+
+---
+
+### 6.1 Quantum Circuit Design
+
+- 2-qubit system
+- RX and RY encoding gates
+- Pauli-Z expectation measurements
+- Trainable parameters (weights)
+- Gradient descent optimization
 
 Example:
 
-Input: [0.5, 0.2]
-
-Output:
-[0.8775, 0.9800]
+Input: [0.5, 0.2]  
+Output: [0.8775, 0.9800]
 
 ---
 
-### VQC Training Setup
+### 6.2 VQC Training
 
-- Gradient descent optimizer (PennyLane)
-- Trainable parameters initialized randomly
-- Loss function defined over circuit outputs
+Optimizer:
+- Gradient Descent (PennyLane)
+
+Training:
 - 100 optimization steps
 
 ---
 
-### Training Results
+### 6.3 Loss Progression
 
-Loss convergence:
-
-- Initial loss: ~1.63
-- Step 20: 0.0303
-- Step 40: 0.0185
-- Step 60: 0.0160
-- Step 80: 0.0153
-- Step 100: 0.0150
+- Initial loss: ~1.6395
+- Step 20: 0.030337
+- Step 40: 0.018537
+- Step 60: 0.016034
+- Step 80: 0.015287
+- Step 100: 0.015035
 
 ---
 
-### Observations
+### 6.4 Observations
 
-- Quantum circuit parameters successfully optimized
-- Gradient-based training worked as expected
-- Loss decreased consistently over iterations
-- The model demonstrates valid VQC learning behavior
-- However, it is trained on simplified inputs, not satellite images yet
+- Loss decreases smoothly and consistently
+- Quantum circuit is fully differentiable
+- Gradient-based optimization works correctly
+- Parameters converge to stable minimum
+- Model successfully learns toy function behavior
+- Not yet applied to real satellite dataset
 
 ---
 
-## Research Direction
+## 7. Current Status
 
-The project now focuses on building a hybrid model:
+### Classical
+- StrongCNN achieved 88.83% accuracy
+- Full evaluation complete
+
+### Quantum
+- VQC successfully implemented
+- Training verified with convergence
+- Still operating on synthetic inputs
+
+---
+
+## 8. Research Direction
+
+The next stage is a hybrid architecture:
 
 CNN feature extractor  
-→ feature compression  
+→ dimensionality reduction (PCA)  
 → quantum variational circuit  
 → final classification
 
-The goal is to evaluate whether quantum layers provide measurable benefit compared to a strong classical baseline.
+Goal:
+Evaluate whether quantum layers provide measurable improvement over a strong classical baseline.
 
 ---
 
-## Next Steps
+## 9. Next Steps
 
-- Extract intermediate features from StrongCNN
-- Reduce dimensionality (PCA or similar)
+- Extract CNN feature embeddings
+- Apply PCA or dimensionality reduction
 - Feed features into quantum circuit
 - Build hybrid CNN + VQC model
-- Benchmark hybrid model against 88.83% baseline
+- Compare against 88.83% StrongCNN baseline
